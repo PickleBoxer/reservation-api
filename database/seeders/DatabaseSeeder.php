@@ -21,5 +21,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Seed resources and reservations
+        $this->call([
+            ResourceSeeder::class,
+            ReservationSeeder::class,
+        ]);
     }
 }
