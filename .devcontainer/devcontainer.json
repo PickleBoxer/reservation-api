@@ -1,0 +1,53 @@
+{
+    "name": "reservation-api",
+    "workspaceMount": "source=damp_site_reservation-api,target=/workspace,type=volume",
+    "workspaceFolder": "/workspace/reservation-api",
+    //"image": "mcr.microsoft.com/devcontainers/php:1-8.4",
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "context": ".",
+        "args": {
+            // Update VARIANT to pick a PHP version: 8, 8.1, 8.0, 7, 7.4
+            // Append -bullseye or -buster to pin to an OS version.
+            // Use -bullseye variants on local on arm64/Apple Silicon.
+            "VARIANT": "8.4"
+        }
+    },
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        },
+        //"ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
+        "ghcr.io/opencodeco/devcontainers/install-php-extensions:0": {
+            "extensions": "bcmath pdo_mysql pcntl mysqli intl zip gd"
+        }
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            "settings": {},
+            "extensions": [
+                "streetsidesoftware.code-spell-checker"
+            ]
+        }
+    },
+    "mounts": [
+        "source=damp_site_reservation-api,target=/usr/local/etc/php/conf.d/php.ini,type=volume,volume-subpath=reservation-api/.devcontainer/php.ini",
+        "source=damp_site_reservation-api,target=/usr/local/etc/php/conf.d/z-xdebug.ini,type=volume,volume-subpath=reservation-api/.devcontainer/xdebug.ini"
+    ],
+    // Specify docker network(s) in devcontainer.json
+    "runArgs": [
+        "--network=devnet",
+        "--name", "reservation-api_devcontainer"
+    ],
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [8080],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "[ -f composer.json ] && composer install || true; [ -f package.json ] && npm install && npm run build || true",
+    // Use 'postStartCommand' to run commands after the container starts.
+    "postStartCommand": "composer run devcontainer",
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}
