@@ -17,10 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Generate and display API token for the test user
+        $token = $user->createToken('dev-token')->plainTextToken;
+        echo "Test User API Token: {$token}\n";
 
         // Seed resources and reservations
         $this->call([
