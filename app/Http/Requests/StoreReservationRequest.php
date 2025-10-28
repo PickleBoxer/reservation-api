@@ -23,10 +23,22 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'resource_id' => ['required', 'exists:resources,id'],
+            'resource_id' => ['required', 'integer', 'exists:resources,id'],
             'start_time' => ['required', 'date', 'after:now'],
             'end_time' => ['required', 'date', 'after:start_time'],
-            'notes' => ['nullable', 'string', 'max:500'],
+            'customer_name' => ['required', 'string', 'max:255'],
+            'customer_email' => ['required', 'email', 'max:255'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'status' => ['nullable', 'in:pending,confirmed'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'resource_id.exists' => 'The selected resource does not exist.',
+            'start_time.after' => 'The reservation must start in the future.',
+            'end_time.after' => 'The end time must be after the start time.',
         ];
     }
 }

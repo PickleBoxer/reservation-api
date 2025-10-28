@@ -13,8 +13,11 @@ class Reservation extends Model
 
     protected $fillable = [
         'resource_id',
+        'user_id',
         'start_time',
         'end_time',
+        'customer_name',
+        'customer_email',
         'notes',
     ];
 
@@ -26,5 +29,10 @@ class Reservation extends Model
     public function resource(): BelongsTo
     {
         return $this->belongsTo(Resource::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

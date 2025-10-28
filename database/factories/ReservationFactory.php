@@ -24,6 +24,8 @@ class ReservationFactory extends Factory
             'resource_id' => Resource::factory(),
             'start_time' => $startTime,
             'end_time' => $endTime,
+            'customer_name' => fake()->name(),
+            'customer_email' => fake()->safeEmail(),
             'notes' => fake()->optional(0.6)->paragraph(),
         ];
     }
