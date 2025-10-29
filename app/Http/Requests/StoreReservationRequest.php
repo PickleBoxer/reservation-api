@@ -29,7 +29,6 @@ class StoreReservationRequest extends FormRequest
             'customer_name' => ['required', 'string', 'max:255'],
             'customer_email' => ['required', 'email', 'max:255'],
             'notes' => ['nullable', 'string', 'max:1000'],
-            'status' => ['nullable', 'in:pending,confirmed'],
         ];
     }
 
