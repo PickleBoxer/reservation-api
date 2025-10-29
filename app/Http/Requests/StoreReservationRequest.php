@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
