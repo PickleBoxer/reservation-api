@@ -55,7 +55,29 @@ php artisan serve
 
 API bo na voljo na: `http://localhost:8000`
 
-## 🔗 API Endpoints
+## � API Dokumentacija
+
+Scramble avtomatsko generira interaktivno OpenAPI dokumentacijo za API.
+
+**Dostop do dokumentacije:**
+- Razvojna okolica: `http://localhost:8000/docs/api`
+- Produkcija: `https://your-domain.com/docs/api`
+
+Dokumentacija vključuje:
+- ✅ Vse API končne točke (endpoints)
+- ✅ Parametre zahtevkov in odgovorov
+- ✅ "Try It" funkcionalnost za testiranje
+- ✅ Bearer token avtentikacijo
+
+### Uporaba "Try It" funkcionalnosti
+
+1. Pojdite na `http://localhost:8000/docs/api`
+2. Kliknite na gumb "Authorize" (🔒)
+3. Vnesite svoj API žeton (brez predpone "Bearer")
+4. Kliknite "Authorize" in nato "Close"
+5. Sedaj lahko testirate API direktno iz dokumentacije
+
+## �🔗 API Endpoints
 
 | Metoda | Endpoint | Opis |
 |--------|----------|------|

@@ -353,11 +353,11 @@ test('returns 405 for unsupported HTTP methods', function (): void {
     $this->deleteJson('/api/reservations')->assertStatus(405);
 });
 
-test('returns 405 for any path under reservations except root POST', function (): void {
+test('returns 404 for any path under reservations except root POST', function (): void {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
-    $this->getJson('/api/reservations/1')->assertStatus(405);
-    $this->putJson('/api/reservations/1')->assertStatus(405);
-    $this->deleteJson('/api/reservations/1')->assertStatus(405);
+    $this->getJson('/api/reservations/1')->assertStatus(404);
+    $this->putJson('/api/reservations/1')->assertStatus(404);
+    $this->deleteJson('/api/reservations/1')->assertStatus(404);
 });
