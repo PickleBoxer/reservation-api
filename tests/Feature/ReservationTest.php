@@ -8,7 +8,7 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
-test('creates a reservation successfully with valid data', function () {
+test('creates a reservation successfully with valid data', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
 
@@ -58,7 +58,7 @@ test('creates a reservation successfully with valid data', function () {
     ]);
 });
 
-test('requires authentication with bearer token', function () {
+test('requires authentication with bearer token', function (): void {
     $resource = Resource::factory()->create();
 
     $data = [
@@ -74,7 +74,7 @@ test('requires authentication with bearer token', function () {
     $response->assertStatus(401);
 });
 
-test('validates required fields', function () {
+test('validates required fields', function (): void {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
@@ -90,7 +90,7 @@ test('validates required fields', function () {
         ]);
 });
 
-test('validates resource_id must exist in database', function () {
+test('validates resource_id must exist in database', function (): void {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
@@ -113,7 +113,7 @@ test('validates resource_id must exist in database', function () {
         ]);
 });
 
-test('validates start_time must be in the future', function () {
+test('validates start_time must be in the future', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -137,7 +137,7 @@ test('validates start_time must be in the future', function () {
         ]);
 });
 
-test('validates end_time must be after start_time', function () {
+test('validates end_time must be after start_time', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -161,7 +161,7 @@ test('validates end_time must be after start_time', function () {
         ]);
 });
 
-test('validates customer_email must be valid email format', function () {
+test('validates customer_email must be valid email format', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -180,7 +180,7 @@ test('validates customer_email must be valid email format', function () {
         ->assertJsonValidationErrors(['customer_email']);
 });
 
-test('validates customer_name max length is 255 characters', function () {
+test('validates customer_name max length is 255 characters', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -199,7 +199,7 @@ test('validates customer_name max length is 255 characters', function () {
         ->assertJsonValidationErrors(['customer_name']);
 });
 
-test('validates notes max length is 1000 characters', function () {
+test('validates notes max length is 1000 characters', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -219,7 +219,7 @@ test('validates notes max length is 1000 characters', function () {
         ->assertJsonValidationErrors(['notes']);
 });
 
-test('allows notes to be optional', function () {
+test('allows notes to be optional', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -242,7 +242,7 @@ test('allows notes to be optional', function () {
     ]);
 });
 
-test('prevents overlapping reservations for the same resource', function () {
+test('prevents overlapping reservations for the same resource', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -268,7 +268,7 @@ test('prevents overlapping reservations for the same resource', function () {
     $response->assertStatus(409);
 });
 
-test('allows reservations for same time slot on different resources', function () {
+test('allows reservations for same time slot on different resources', function (): void {
     $user = User::factory()->create();
     $resource1 = Resource::factory()->create();
     $resource2 = Resource::factory()->create();
@@ -295,7 +295,7 @@ test('allows reservations for same time slot on different resources', function (
     $response->assertStatus(201);
 });
 
-test('allows consecutive reservations without overlap', function () {
+test('allows consecutive reservations without overlap', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -321,7 +321,7 @@ test('allows consecutive reservations without overlap', function () {
     $response->assertStatus(201);
 });
 
-test('calculates duration_minutes correctly in response', function () {
+test('calculates duration_minutes correctly in response', function (): void {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
     Sanctum::actingAs($user);
@@ -343,7 +343,7 @@ test('calculates duration_minutes correctly in response', function () {
         ->assertJsonPath('data.duration_minutes', 180);
 });
 
-test('returns 405 for unsupported HTTP methods', function () {
+test('returns 405 for unsupported HTTP methods', function (): void {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
@@ -353,7 +353,7 @@ test('returns 405 for unsupported HTTP methods', function () {
     $this->deleteJson('/api/reservations')->assertStatus(405);
 });
 
-test('returns 405 for any path under reservations except root POST', function () {
+test('returns 405 for any path under reservations except root POST', function (): void {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 

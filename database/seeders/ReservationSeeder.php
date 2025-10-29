@@ -19,7 +19,7 @@ class ReservationSeeder extends Seeder
         // Create 3-5 reservations for each resource
         $resources->each(function ($resource) {
             Reservation::factory()
-                ->count(rand(3, 5))
+                ->count(random_int(3, 5))
                 ->create([
                     'resource_id' => $resource->id,
                 ]);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use App\Models\Reservation;
@@ -8,14 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ReservationConflictException extends Exception
 {
-    /** @var Collection<int, Reservation> */
-    protected Collection $conflicts;
-
     /** @param Collection<int, Reservation> $conflicts */
-    public function __construct(string $message, Collection $conflicts)
+    public function __construct(string $message, protected Collection $conflicts)
     {
         parent::__construct($message);
-        $this->conflicts = $conflicts;
     }
 
     /** @return Collection<int, Reservation> */

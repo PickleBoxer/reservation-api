@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Models\Reservation;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @method User|null user()
+ */
 class StoreReservationRequest extends FormRequest
 {
     /**
