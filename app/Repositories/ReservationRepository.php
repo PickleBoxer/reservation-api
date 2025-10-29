@@ -37,6 +37,6 @@ class ReservationRepository
      */
     public function create(array $data): Reservation
     {
-        return Reservation::query()->create($data);
+        return Reservation::create($data)->load('resource');
     }
 }

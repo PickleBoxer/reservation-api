@@ -1,61 +1,227 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Reservation API - Laravel 12
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+RESTful API za upravljanje rezervacij različnih virov (sobe, vozila, prostori).
 
-## About Laravel
+## 📋 Zahteve
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **PHP 8.3+**
+- **Composer**
+- **SQLite** (development) / **PostgreSQL** (production)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Namestitev
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Možnost 1: Korak za korakom
 
-## Learning Laravel
+```bash
+# Kloniraj repozitorij
+git clone https://github.com/PickleBoxer/reservation-api.git
+cd reservation-api
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Namesti odvisnosti
+composer install
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Kopiraj .env datoteko
+cp .env.example .env
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Generiraj aplikacijski ključ
+php artisan key:generate
 
-## Laravel Sponsors
+# Ustvari SQLite bazo
+touch database/database.sqlite
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Poženi migracijo in seeder
+php artisan migrate --seed
 
-### Premium Partners
+# Zaženi razvojni strežnik
+php artisan serve
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Možnost 2: Hitro nastavljanje
 
-## Contributing
+```bash
+# Kloniraj repozitorij
+git clone <repository-url>
+cd reservation-api
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# All-in-one ukaz
+composer run setup
 
-## Code of Conduct
+# Zaženi razvojni strežnik
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+> [!NOTE]
+> V terminalu se izpiše personal token za dostop do API-ja.
 
-## Security Vulnerabilities
+API bo na voljo na: `http://localhost:8000`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🔗 API Endpoints
 
-## License
+| Metoda | Endpoint | Opis |
+|--------|----------|------|
+| `POST` | `/api/reservations` | Ustvari novo rezervacijo |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 💡 Primeri uporabe
+
+### Ustvari novo rezervacijo
+
+```bash
+curl -X POST http://localhost:8000/api/reservations \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_API_TOKEN>" \
+  -H "Accept: application/json" \
+  -d '{
+    "resource_id": 1,
+    "start_time": "2024-12-01T10:00:00Z",
+    "end_time": "2024-12-01T12:00:00Z",
+    "customer_name": "John Doe",
+    "customer_email": "john@example.com",
+    "notes": "Important meeting"
+  }'
+```
+
+**Pričakovan odziv (201):**
+
+```json
+{
+  "message": "Reservation created successfully",
+  "data": {
+    "id": 1,
+    "resource": {
+      "id": 1,
+      "name": "Conference Room A",
+      "type": "room"
+    },
+    "start_time": "2025-12-01T10:00:00Z",
+    "end_time": "2025-12-01T12:00:00Z",
+    "customer": {
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "notes": "Important meeting"
+  }
+}
+```
+
+## 📚 API Dokumentacija
+
+### `POST /api/reservations`
+
+**Headers:**
+
+| Header | Vrednost | Obvezno |
+|--------|----------|---------|
+| `Content-Type` | `application/json` | ✅ |
+| `Accept` | `application/json` | ✅ |
+| `Authorization` | `Bearer <YOUR_API_TOKEN>` | ✅ |
+
+**Obvezna polja:**
+
+| Polje | Tip | Opis |
+|-------|-----|------|
+| `resource_id` | `integer` | ID vira za rezervacijo |
+| `start_time` | `string` | Začetek rezervacije (ISO8601 format) |
+| `end_time` | `string` | Konec rezervacije (ISO8601 format, mora biti po start_time) |
+| `customer_name` | `string` | Ime stranke (max 255 znakov) |
+| `customer_email` | `string` | Email stranke (veljaven email) |
+
+**Opcijska polja:**
+
+| Polje | Tip | Opis |
+|-------|-----|------|
+| `notes` | `string` | Opombe (max 1000 znakov) |
+
+### Odgovori
+
+<details>
+<summary><strong>✅ Uspešen odgovor (201)</strong></summary>
+
+```json
+{
+  "message": "Reservation created successfully",
+  "data": {
+    // ReservationResource object
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><strong>❌ Možne napake</strong></summary>
+
+| Status | Opis |
+|--------|------|
+| `409 Conflict` | Časovni termin ni na voljo |
+| `422 Validation Error` | Neveljavni vhodni podatki |
+| `404 Not Found` | Vir ne obstaja |
+| `401 Unauthorized` | Neveljaven API token |
+
+</details>
+
+## 🧪 Testiranje
+
+```bash
+# Poženi vse teste
+php artisan test
+
+# Poženi teste z verbose outputom
+php artisan test --verbose
+
+# Poženi specifične teste
+php artisan test --filter ReservationTest
+```
+
+## 🔧 Utility ukazi
+
+### Resetiranje baze
+
+```bash
+# Izprazni in ponovno ustvari bazo
+php artisan migrate:fresh --seed
+```
+
+### Čiščenje cache-a
+
+```bash
+# Počisti cache
+php artisan config:clear && php artisan cache:clear
+```
+
+## 🐛 Težave in rešitve
+
+<details>
+<summary><strong>Baza se ne ustvari</strong></summary>
+
+```bash
+# Preveri, da je SQLite baza ustvarjena
+touch database/database.sqlite
+
+# Preveri dovoljenja
+chmod 664 database/database.sqlite
+```
+
+</details>
+
+<details>
+<summary><strong>Napake pri konfiguraciji</strong></summary>
+
+```bash
+# Preveri .env datoteko
+cat .env | grep DB_CONNECTION
+# Naj bo: DB_CONNECTION=sqlite
+
+# Počisti cache
+php artisan config:clear && php artisan cache:clear
+```
+
+</details>
+
+<details>
+<summary><strong>API ne deluje</strong></summary>
+
+- Preveri, da je strežnik zagnan: `php artisan serve`
+- Preveri API token v terminalu po `migrate --seed`
+- Preveri, da uporabljaš pravilne headerje v zahtevah
+
+</details>

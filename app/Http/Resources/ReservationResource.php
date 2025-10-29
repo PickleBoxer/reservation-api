@@ -23,7 +23,9 @@ class ReservationResource extends JsonResource
         return [
             'id' => $this->id,
             'resource' => [
-                'id' => $this->resource->id,
+                'id' => $this->resource->resource->id,
+                'name' => $this->resource->resource->name,
+                'type' => $this->resource->resource->type->value,
             ],
             'start_time' => $this->start_time->toIso8601String(),
             'end_time' => $this->end_time->toIso8601String(),
