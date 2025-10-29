@@ -18,7 +18,7 @@ class ResourceFactory extends Factory
     public function definition(): array
     {
         $type = fake()->randomElement(ResourceType::cases());
-        
+
         return [
             'name' => $this->generateNameByType($type),
             'type' => $type,
@@ -38,13 +38,13 @@ class ResourceFactory extends Factory
                 'Board Room',
                 'Training Room',
                 'Executive Suite',
-            ]) . ' - Floor ' . fake()->numberBetween(1, 10),
+            ]).' - Floor '.fake()->numberBetween(1, 10),
             ResourceType::VEHICLE => fake()->randomElement([
                 'Company Van',
                 'Delivery Truck',
                 'Executive Car',
                 'Service Vehicle',
-            ]) . ' (' . fake()->lexify('???-####') . ')',
+            ]).' ('.fake()->lexify('???-####').')',
             ResourceType::EQUIPMENT => fake()->randomElement([
                 'Projector',
                 'Laptop',
@@ -52,13 +52,13 @@ class ResourceFactory extends Factory
                 'Microphone System',
                 'Video Conference Setup',
                 'Whiteboard',
-            ]) . ' #' . fake()->numberBetween(1, 100),
+            ]).' #'.fake()->numberBetween(1, 100),
             ResourceType::SPACE => fake()->randomElement([
                 'Parking Spot',
                 'Storage Unit',
                 'Workstation',
                 'Locker',
-            ]) . ' ' . fake()->bothify('##?'),
+            ]).' '.fake()->bothify('##?'),
         };
     }
 }

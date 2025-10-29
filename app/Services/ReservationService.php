@@ -2,18 +2,17 @@
 
 namespace App\Services;
 
+use App\Exceptions\ReservationConflictException;
 use App\Models\Reservation;
+use App\Repositories\ReservationRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Exceptions\ReservationConflictException;
-use App\Repositories\ReservationRepository;
 
 class ReservationService
 {
     public function __construct(
         protected ReservationRepository $repository
-    ) {
-    }
+    ) {}
 
     /**
      * Ustvari novo rezervacijo z avtomatičnim preverjanjem konfliktov

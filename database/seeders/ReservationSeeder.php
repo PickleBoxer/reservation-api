@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Reservation;
 use App\Models\Resource;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ReservationSeeder extends Seeder

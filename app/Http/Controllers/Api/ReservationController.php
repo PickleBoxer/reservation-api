@@ -9,7 +9,6 @@ use Illuminate\Http\JsonResponse;
 
 class ReservationController
 {
-
     public function __construct(
         protected ReservationService $reservationService
     ) {}

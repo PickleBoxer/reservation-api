@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\User;
-use App\Models\Resource;
 use App\Models\Reservation;
+use App\Models\Resource;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
@@ -11,7 +11,7 @@ uses(RefreshDatabase::class);
 test('creates a reservation successfully with valid data', function () {
     $user = User::factory()->create();
     $resource = Resource::factory()->create();
-    
+
     Sanctum::actingAs($user);
 
     $data = [
@@ -60,7 +60,7 @@ test('creates a reservation successfully with valid data', function () {
 
 test('requires authentication with bearer token', function () {
     $resource = Resource::factory()->create();
-    
+
     $data = [
         'resource_id' => $resource->id,
         'start_time' => now()->addHours(2)->toIso8601String(),
@@ -235,7 +235,7 @@ test('allows notes to be optional', function () {
     $response = $this->postJson('/api/reservations', $data);
 
     $response->assertStatus(201);
-    
+
     $this->assertDatabaseHas('reservations', [
         'customer_name' => 'John Doe',
         'notes' => null,

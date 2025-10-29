@@ -18,7 +18,7 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         $startTime = fake()->dateTimeBetween('now', '+30 days');
-        $endTime = (clone $startTime)->modify('+' . fake()->numberBetween(1, 8) . ' hours');
+        $endTime = (clone $startTime)->modify('+'.fake()->numberBetween(1, 8).' hours');
 
         return [
             'resource_id' => Resource::factory(),
