@@ -36,7 +36,7 @@
   "name": "laravel/laravel",
   "prefer-stable": true,
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "dedoc/scramble": "^0.13.1",
     "laravel/framework": "^12.0",
     "laravel/sanctum": "^4.0",

@@ -33,7 +33,7 @@ touch database/database.sqlite
 php artisan migrate --seed
 
 # Zaženi razvojni strežnik
-php artisan serve
+php artisan serve --no-reload
 ```
 
 ### Možnost 2: Hitro nastavljanje
@@ -46,8 +46,11 @@ cd reservation-api
 # All-in-one ukaz
 composer run setup
 
+# Poženi migracijo in seeder
+php artisan migrate --seed
+
 # Zaženi razvojni strežnik
-php artisan serve
+php artisan serve --no-reload
 ```
 
 > [!NOTE]
@@ -55,13 +58,12 @@ php artisan serve
 
 API bo na voljo na: `http://localhost:8000`
 
-## � API Dokumentacija
+## API Dokumentacija
 
 Scramble avtomatsko generira interaktivno OpenAPI dokumentacijo za API.
 
 **Dostop do dokumentacije:**
 - Razvojna okolica: `http://localhost:8000/docs/api`
-- Produkcija: `https://your-domain.com/docs/api`
 
 Dokumentacija vključuje:
 - ✅ Vse API končne točke (endpoints)
@@ -69,15 +71,7 @@ Dokumentacija vključuje:
 - ✅ "Try It" funkcionalnost za testiranje
 - ✅ Bearer token avtentikacijo
 
-### Uporaba "Try It" funkcionalnosti
-
-1. Pojdite na `http://localhost:8000/docs/api`
-2. Kliknite na gumb "Authorize" (🔒)
-3. Vnesite svoj API žeton (brez predpone "Bearer")
-4. Kliknite "Authorize" in nato "Close"
-5. Sedaj lahko testirate API direktno iz dokumentacije
-
-## �🔗 API Endpoints
+## 🔗 API Endpoints
 
 | Metoda | Endpoint | Opis |
 |--------|----------|------|
